@@ -1,0 +1,11 @@
+{% extends "base.html.twig" %}
+{% block body %}
+
+
+{% if evenements is not empty %}
+{% for evenement in evenements %}
+<p>{{ evenement.titre }}</p>
+{% endfor %}
+
+{% endif %}
+{% endblock %}

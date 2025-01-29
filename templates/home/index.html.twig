@@ -1,0 +1,114 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+
+    .carousel-inner { height: 0; padding-bottom: 25%; border: solid 2px red; }
+    .carousel-item { position: absolute; top: 0; right: 0; bottom: 0; left: 0; }
+    .carousel-item img { height: 100%; object-fit: cover; }
+
+    .card1 { background-color: gold;}
+    .card2 { background-color: silver;}
+    .card3 { background-color: #CD7F32;}
+
+</style>
+
+<div id="carouselExample" class="carousel slide h-75" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="{{ asset('images/carousel/1.jpg') }}" class="d-block w-100" alt="Image 1">
+        </div>
+        <div class="carousel-item">
+            <img src="{{ asset('images/carousel/visit-palais-garnier-opera-header.jpg') }}" class="d-block w-100" alt="Image 2">
+        </div>
+        <div class="carousel-item">
+            <img src="{{ asset('images/carousel/07_ConcertHalls__PalaisGarnier_shutterstock_752152147.jpg') }}" class="d-block w-100" alt="Image 3">
+        </div>
+        <div class="carousel-item">
+            <img src="{{ asset('images/carousel/opera-garnier-theatre.jpg') }}" class="d-block w-100" alt="Image 3">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </button>
+</div>
+
+<div class="container my-5">
+    <h2 class="text-center mb-4">Nos Cartes Cadeaux</h2>
+    <h3 class="text-center mb-4">OFFREZ DU THÊATRE !</h3>
+    <p class="text-center mb-4">Offrez à vos proche une chance pour découvrir le thêatre</p>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card card1">
+                <img src="{{ asset('images/card/opera-garnier-paris.jpg') }}" class="card-img-top" alt="Carte Cadeau 1">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Carte Cadeau Or</h5>
+                    <p class="card-text">50€</p>
+                    <p class="card-text">Profitez d'une expérience VIP dans notre théâtre.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 ">
+            <div class="card card2">
+                <img src="{{ asset('images/card/opera-garnier-paris.jpg') }}" class="card-img-top" alt="Carte Cadeau 2">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Carte Cadeau Argent</h5>
+                    <p class="card-text">30€</p>
+                    <p class="card-text">Offrez un moment unique à vos proches.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card card3">
+                <img src="{{ asset('images/card/opera-garnier-paris.jpg') }}" class="card-img-top" alt="Carte Cadeau 3">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Carte Cadeau Bronze</h5>
+                    <p class="card-text ">10€</p>
+                    <p class="card-text">Un billet pour un spectacle au choix.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <h2 class="text-center mb-4">Localisation du Théâtre</h2>
+    <h4 class="text-center mb-4">COMMENT VENIR ?</h4>
+    <p class="text-center mb-4">Pour vous rendre au théâtre de Paris, vous pouvez vous rendre à l'adresse suivante : 15 Rue Blanche, 75009 Paris</p>
+    <h4 class="text-center mb-4">ACCES EN SALLE</h4>
+    <p class="text-center mb-4">Votre placement en salle est garanti jusqu'à 5 minutes avant le début de la représentation.</p>
+    <p class="text-center mb-4">Une fois le spectacle commencé, vous ne pourrez plus accéder à la salle.</p>
+    <div id="map" style="height: 400px;"></div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var map = L.map('map').setView([48.8566, 2.3522], 14); // Coordonnées de Paris
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        var marker = L.marker([48.8566, 2.3522]).addTo(map)
+            .bindPopup("<b>Théâtre de Paris</b><br>15 Rue Blanche, 75009 Paris<br><a href='https://www.google.com/maps/dir/?api=1&destination=48.8566,2.3522' target='_blank'>Itinéraire</a>")
+            .openPopup();
+    });
+</script>
+
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+
+    This friendly message is coming from:
+    <ul>
+        <li>Your controller at <code>C:/Users/ssouh/Desktop/theatre/theatre/src/Controller/HomeController.php</code></li>
+        <li>Your template at <code>C:/Users/ssouh/Desktop/theatre/theatre/templates/home/index.html.twig</code></li>
+    </ul>
+</div>
+{% endblock %}
