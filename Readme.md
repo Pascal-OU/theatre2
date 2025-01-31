@@ -22,8 +22,6 @@ Avant d'exécuter ce projet, assurez-vous d'avoir installé :
  - Leaflet.js (pour la carte OpenStreetMap)
  - Stripe (paiement en ligne)
  - Symfony Mailer (envoi d’e-mails de confirmation)
- - 
- - 
 
 ### Installation de Symfony
 
@@ -52,8 +50,11 @@ composer install
 
 ### 3. Configurer la base de données
 Modifiez le fichier .env avec les informations de connexion :
-
+```makefile
 DATABASE_URL=mysql://root:password@127.0.0.1:3306/theatre
+
+```
+
 
 Puis, créez la base de données et exécutez les migrations :
 ```bash
@@ -110,10 +111,11 @@ Accédez ensuite à http://127.0.0.1:8000 pour voir la page d'accueil.
 composer require stripe/stripe-php
 ```
 Dans votre fichier .env, ajoutez (ou mettez à jour) vos clés Stripe :
-
+```dotenv
 STRIPE_PUBLIC_KEY="pk_test_votre_cle_publique"
 STRIPE_SECRET_KEY="sk_test_votre_cle_secrete"
 
+```
 Obtenez ces clés depuis votre Dashboard Stripe.
 
 #### 2.2. Entité Payment
@@ -134,11 +136,12 @@ Vous trouverez un exemple de code dans src/Controller/PaymentController.php (voi
 #### 2.4. Bouton “Payer”
 Dans la vue reservation (ex. templates/reservation/reservation.html.twig), ajoutez :
 
-twig
+```twig
 <a class="btn btn-primary"
    href="{{ path('payment_create', {'id': evenement.id}) }}">
    Payer maintenant
 </a>
+```
 
 Le bouton redirige vers la route qui crée la session Stripe et envoie l’utilisateur sur la page de paiement.
 
