@@ -21,7 +21,7 @@
         {% for evenement in evenements %}
             <tr>
                 <td>{{ evenement.id }}</td>
-                <td>{{ evenement.titre }}</td>
+                <td>{{ evenement.title }}</td>
                 <td>{{ evenement.description }}</td>
                 <td>{{ evenement.createdAt ? evenement.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ evenement.nbPlace }}</td>
