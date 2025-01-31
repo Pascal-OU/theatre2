@@ -11,10 +11,9 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class EvenementRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, Evenement::class);
-    }
+  public function __construct(ManagerRegistry $registry){
+    parent::__construct($registry, Evenement::class);
+  }
 
     //    /**
     //     * @return Evenement[] Returns an array of Evenement objects
@@ -31,11 +30,20 @@ class EvenementRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-   public function findeventbyuser($value){
+  public function findeventbyuser($value){
     return $this->createQueryBuilder('e')
     ->andWhere('e.user = :val')
     ->setParameter('val',$value)
     ->getQuery()
     ->getResult();
+  }
+
+  public function findValideEvent($value){
+    return $this->createQueryBuilder('e')
+    ->andWhere('e.valide = :val')
+    ->setParameter('val',$value)
+    ->getQuery()
+    ->getResult();
+
   }
 }

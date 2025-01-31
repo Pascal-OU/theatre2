@@ -7,6 +7,7 @@ use App\Entity\Evenement;
 use Doctrine\DBAL\Types\DateType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,6 +18,11 @@ class EvenementType extends AbstractType
         $builder
             ->add('titre')
             ->add('description')
+            ->add('avatar', FileType::class, [
+                "data_class" => null,
+                "required" => false,
+                /* "attr" => ["accept" => "image/*"] */
+            ])
             ->add('createdAt', null, [
                 'widget' => 'single_text',
             ])

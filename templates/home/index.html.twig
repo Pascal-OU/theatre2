@@ -17,6 +17,7 @@
 
 </style>
 
+{# CAROUSEL #}
 <div id="carouselExample" class="carousel slide h-75" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
@@ -40,6 +41,7 @@
     </button>
 </div>
 
+{# CARD CADEAUX #}
 <div class="container my-5">
     <h2 class="text-center mb-4">Nos Cartes Cadeaux</h2>
     <h3 class="text-center mb-4">OFFREZ DU THÊATRE !</h3>
@@ -78,6 +80,7 @@
     </div>
 </div>
 
+{# LOCALISATION #}
 <div class="container my-5">
     <h2 class="text-center mb-4">Localisation du Théâtre</h2>
     <h4 class="text-center mb-4">COMMENT VENIR ?</h4>
@@ -102,13 +105,33 @@
     });
 </script>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+{# EVENEMENTS #}
+{% for eventsvalide in eventsvalides %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/ssouh/Desktop/theatre/theatre/src/Controller/HomeController.php</code></li>
-        <li>Your template at <code>C:/Users/ssouh/Desktop/theatre/theatre/templates/home/index.html.twig</code></li>
-    </ul>
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card" style="width:250px">
+                {% if eventsvalide.avatar is null %}
+                    <img class="card-img-top" src="{{ asset('images/events/dall-e-2024.jpg') }}" alt="Card image" style="width:100%">
+                    {% else %}
+                    <img class="card-img-top" src={{asset('images/' ~ eventsvalide.avatar)}} alt="Card image" style="width:100%">
+                {% endif %}
+                <div class="card-body text-center">
+                    <h4 class="card-title">{{eventsvalide.title}}</h4>
+                    <h4 class="card-title">{{eventsvalide.prix}}€</h4>
+                    <p class="card-text">{{eventsvalide.createdAt|date("m/d/Y H:i")}}</p>
+                    <p class="">{{eventsvalide.description|slice('0', '200')~ '...'}}</p>
+                    
+                    <a href="{{path('app_evenement_show',{'id':eventsvalide.id})}}"> En savoir plus</a>
+                    <a href="{{path('reservation',{'id':eventsvalide.id})}}"> Réserver </a>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+{% endfor %}
+
 {% endblock %}

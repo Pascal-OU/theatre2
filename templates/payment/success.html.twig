@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container my-5">
+        <h1>Paiement Réussi</h1>
+        <p>Merci pour votre achat !</p>
+        <p>Référence transaction : {{ payment.stripeSessionId }}</p>
+        <a href="{{ path('app_home') }}">Retour à l'accueil</a>
+    </div>
+
+{% endblock %}

@@ -35,17 +35,23 @@ class Evenement
     #[ORM\ManyToOne(inversedBy: 'evenements')]
     private ?User $user = null;
 
+    #[ORM\Column]
+    private ?bool $valide = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $avatar = null;
+
     public function getId(): ?int
     {
         return $this->id;
     }
-
-    public function getTitre(): ?string
+    // Getter et Setter pour title
+    public function getTitle(): ?string
     {
         return $this->titre;
     }
 
-    public function setTitre(string $titre): static
+    public function setTitle(string $titre): static
     {
         $this->titre = $titre;
 
@@ -120,6 +126,30 @@ class Evenement
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function isValide(): ?bool
+    {
+        return $this->valide;
+    }
+
+    public function setValide(bool $valide): static
+    {
+        $this->valide = $valide;
+
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(string $avatar): static
+    {
+        $this->avatar = $avatar;
 
         return $this;
     }

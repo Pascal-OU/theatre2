@@ -1,0 +1,47 @@
+{% extends "base.html.twig" %}
+{% block body %}
+
+
+<div class="card" style="width:400px"></div>
+    {% if evenement.avatar is null %}
+        <img class="card-img-top" src="{{ asset('images/events/dall-e-2024.jpg') }}" alt="Card image" style="width:100%">
+    {% else %}
+        <img src="{{asset('images/' ~ evenement.avatar)}}" alt="" />
+    {% endif %}
+    <div class="card-body">
+        <h4 class="card-title">{{eventsvalide.title}}</h4>
+        <h4 class="card-title">{{eventsvalide.prix}}</h4>
+        <label for="nbPlaces" class="">Nombre de place :</label>
+        <input type="number" id="nbPlaces" name="nbPlaces" min="1">
+
+        <p id="prixTotalLabel">Le prix total est de : </p>
+        <h5>Le spectacle le {{evenement.createAt|date("m/d/Y")}} à {{evenement.createAt|date("H:i")}}</h5>
+
+        {# <a href="{{path('paypal')}}" class="btn btn-primary>Passer au payement</a> #}
+
+        {# Lien vers la route payment_create #}
+        <a class="btn btn-primary" href="{{ path('payment_create', {'id': evenement.id}) }}">
+            Payer maintenant
+        </a>
+        
+    </div>
+</div>  
+
+<script>
+    document.getElementById("nbPlaces").addEventListener('input',function(){
+        var prixSpectacle = parseFloat('{{evenement.prix}}')
+        var nbPlaces = parseInt(this.value)
+        var prixTotal = prixSpectacle * nbPlaces
+        if (!nbPlaces) {
+            document.getElementById("prixTotalLabel").innerHTML = "Le prix total est de : 0 €"
+            return;
+        } else {
+            document.getElementById("prixTotalLabel").innerHTML = "Le prix total est de : " + prixTotal + " €"
+        }
+    });
+</script>
+
+
+
+{% endblock %}
+

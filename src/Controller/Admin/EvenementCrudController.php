@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use PhpParser\Node\Name;
 
 class EvenementCrudController extends AbstractCrudController
@@ -24,6 +25,7 @@ class EvenementCrudController extends AbstractCrudController
     {
         return [
             // IdField::new('id'),
+            BooleanField::new('valide'),
             TextField::new('titre'),
             TextEditorField::new('description'),
             NumberField::new('prix'),
@@ -32,11 +34,7 @@ class EvenementCrudController extends AbstractCrudController
             // ->formatValue(function ($value, $entity) {
             //     return $entity->getCategory() ? $entity->getCategory()->getNomCategory() : null;
             // }),
-
-
-
-
-
+        
         ];
     }
 }
