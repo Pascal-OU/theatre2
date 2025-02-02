@@ -20,6 +20,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $firstname = null;
+
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $lastname = null;
+
+    #[ORM\Column(type: 'date', nullable: true)]
+    private ?\DateTimeInterface $dateOfBirth = null;
+
+
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
@@ -41,6 +51,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Evenement::class, mappedBy: 'user')]
     private Collection $evenements;
 
+    #[ORM\Column(type: 'boolean')]
+    private bool $agreeTerms = false;
+
     public function __construct()
     {
         $this->evenements = new ArrayCollection();
@@ -50,6 +63,37 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->id;
     }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+    public function setFirstname(?string $firstname): self
+    {
+        $this->firstname = $firstname;
+        return $this;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+    public function setLastname(?string $lastname): self
+    {
+        $this->lastname = $lastname;
+        return $this;
+    }
+
+    public function getDateOfBirth(): ?\DateTimeInterface
+    {
+        return $this->dateOfBirth;
+    }
+    public function setDateOfBirth(?\DateTimeInterface $dateOfBirth): self
+    {
+        $this->dateOfBirth = $dateOfBirth;
+        return $this;
+    }
+
 
     public function getEmail(): ?string
     {
@@ -148,6 +192,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             }
         }
 
+        return $this;
+    }
+
+    public function isAgreeTerms(): bool
+    {
+        return $this->agreeTerms;
+    }
+
+    public function setAgreeTerms(bool $agreeTerms): self
+    {
+        $this->agreeTerms = $agreeTerms;
         return $this;
     }
 }

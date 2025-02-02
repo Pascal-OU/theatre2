@@ -3,17 +3,250 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+<style>
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 85vh
+    }
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        width: 350px;
+        padding: 20px;
+        border-radius: 2rem;
+        position: relative;
+        background-color: #1a1a1a;
+        color: #fff;
+        border: 1px solid #333;
+    }
+    .title {
+        font-size: 28px;
+        font-weight: 600;
+        letter-spacing: -1px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        padding-left: 30px;
+        color: #00bfff;
+    }
+    .title::before {
+        width: 18px;
+        height: 18px;
+    }
+    .title::after {
+        width: 18px;
+        height: 18px;
+        animation: pulse 1s linear infinite;
+    }
+    .title::before,
+    .title::after {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        left: 0px;
+        background-color: #00bfff;
+    }
+        
+    .form-group {
+        margin-bottom: 1rem;
+        display: flex;
+        flex-direction: column;
+        color: #fff;
+    }
+    .form .form-group .form-control {
+        background-color: #333;
+        color: #fff;
+        border: 1px solid rgba(105, 105, 105, 0.397);
+    }
+      
+    .form label {
+        position: relative;
+        display: block;
+    }
+    .form label .input {
+        background-color: #333;
+        color: #fff;
+        width: 100%;
+        padding: 20px 05px 05px 10px;
+        outline: 0;
+        border: 1px solid rgba(105, 105, 105, 0.397);
+        border-radius: 10px;
+    }
+    /* Positionne le "label" flottant au-dessus */
+    .form label span {
+        color: rgba(255, 255, 255, 0.5);
+        position: absolute;
+        left: 10px;
+        top: 5px;
+        font-size: 0.9em;
+        transition: 0.3s ease;
+        pointer-events: none;
+    }
+    /* Quand le champ est focus, on monte le label */
+    .input:focus + span {
+        color: #00bfff;
+        top: -2px;
+        font-size: 0.7em;
+        font-weight: 600;
+    }
 
-    {{ form_errors(registrationForm) }}
+    .agreeTerms {
+        margin-bottom: 15px;
+        display: flex;
+        flex-wrap: wrap-reverse;
+    }
+    
+      
+    .submit {
+        width: 100%;
+        border: none;
+        outline: none;
+        padding: 10px;
+        border-radius: 10px;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 600;
+        background-color: #00bfff;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+      
+    .submit:hover {
+        background-color: #00bfff96;
+    }
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+    
+    .signin {
+        text-align: center;
+        font-size: 0.75rem;
+        line-height: 1rem;
+        color: rgba(156, 163, 175, 1);
+    }
+    .signin a { color: #00bfff; } 
+    .signin a:hover {
+        text-decoration: underline royalblue;
+    }
+      
+    @keyframes pulse {
+        from {
+          transform: scale(0.9);
+          opacity: 1;
+        }
+      
+        to {
+          transform: scale(1.8);
+          opacity: 0;
+        }
+    }
+      
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+</style>
+
+    <div class="container">
+
+        {# Affiche d'éventuels messages d'erreurs globaux du formulaire #}
+        {{ form_errors(registrationForm) }}
+
+        <div class="form-container">
+            <p class="title">Register </p>
+            <p>Inscrivez-vous</p>
+            
+            {# Début du formulaire Symfony #}
+            {{ form_start(registrationForm, {'attr': {'class': 'form'}}) }}
+
+                
+                {# Prénom #}
+                <label class="mb-3">
+                    {{ form_widget(registrationForm.firstname, {
+                        'attr': {'class': 'input', 'placeholder': ''}
+                    }) }}
+                    <span>Prénom</span>
+                </label>
+                {{ form_errors(registrationForm.firstname) }}
+
+                {# Nom #}
+                <label class="mb-3">
+                    {{ form_widget(registrationForm.lastname, {
+                        'attr': {'class': 'input', 'placeholder': ''}
+                    }) }}
+                    <span>Nom</span>
+                </label>
+                {{ form_errors(registrationForm.lastname) }}
+
+                {# Date de naissance #}
+                <div class="form-group">
+                    {{ form_label(registrationForm.dateOfBirth, null, {'label_attr': {'class':'control-label'}}) }}
+                    {{ form_widget(registrationForm.dateOfBirth, {
+                        'attr': {'class': 'form-control', 'placeholder': 'YYYY-MM-DD'}
+                    }) }}
+                    {{ form_errors(registrationForm.dateOfBirth) }}
+                </div>
+                
+                {# Champ email #}
+                <label class="mb-3">
+                    {{ form_widget(registrationForm.email, {
+                        'attr': {
+                            'class': 'input',
+                            'placeholder': ''
+                        }
+                    }) }}
+                    <span>Email</span>
+                </label>
+                {{ form_errors(registrationForm.email) }} 
+                    
+                {# Champ mot de passe #}
+                <label class="mb-3">
+                    {{ form_widget(registrationForm.plainPassword, {
+                        'attr': {
+                            'class': 'input',
+                            'placeholder': ''
+                        }
+                    }) }}
+                    <span>Password</span>
+                </label>
+                {{ form_errors(registrationForm.plainPassword) }}
+
+                {# Champ "Confirm password" #}
+                {# 
+                <div class="form-group">
+                    {{ form_label(registrationForm.plainPasswordConfirm) }}
+                    {{ form_widget(registrationForm.plainPasswordConfirm, {
+                        'attr': {'class': 'form-control', 'placeholder': 'Confirm password'}
+                    }) }}
+                    {{ form_errors(registrationForm.plainPasswordConfirm) }}
+                </div>
+                #}
+                
+                {# Case à cocher "agreeTerms" #}
+                <div class="agreeTerms">
+                    {{ form_widget(registrationForm.agreeTerms) }}
+                    <span class="ms-2"> Accepter les conditions</span>
+                </div>
+
+                {# Bouton Register "Submit" #}
+                <button type="submit" class="submit mb-3">Register<button>
+            {# Fin du formulaire #}
+            {{ form_end(registrationForm) }}
+            
+            <div class="contLine">
+                <div class="line"></div>
+            </div>
+
+            <p class="signin">
+                Vous avez déjà un compte ? 
+                <a rel="noopener noreferrer" href="{{ path('app_login') }}">Sign in</a> 
+            </p>
+
+            
+             
+            
+            
+            
+            
+        </div>
+    </div>
 {% endblock %}

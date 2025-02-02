@@ -3,39 +3,216 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-    <form method="post">
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 85vh
+        }
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            width: 350px;
+            padding: 20px;
+            border-radius: 2rem;
+            position: relative;
+            background-color: #1a1a1a;
+            color: #fff;
+            border: 1px solid #333;
+        }
+        .title {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -1px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding-left: 30px;
+            color: #00bfff;
+        }
+        .title::before {
+            width: 18px;
+            height: 18px;
+        }
+        .title::after {
+            width: 18px;
+            height: 18px;
+            animation: pulse 1s linear infinite;
+        }
+        .title::before,
+        .title::after {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            left: 0px;
+            background-color: #00bfff;
+        }
+          
+        .form-group {
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
+            color: #fff;
+        }
+        .form .form-group .form-control {
+            background-color: #333;
+            color: #fff;
+            border: 1px solid rgba(105, 105, 105, 0.397);
+        }
+          
+        .form label {
+            position: relative;
+            display: block;
+        }
+        .form label input {
+            background-color: #333;
+            color: #fff;
+            width: 100%;
+            padding: 20px 05px 05px 10px;
+            outline: 0;
+            border: 1px solid rgba(105, 105, 105, 0.397);
+            border-radius: 10px; 
+        }
+        /* Positionne le "label" flottant au-dessus */
+        .form label span {
+            color: rgba(255, 255, 255, 0.5);
+            position: absolute;
+            left: 10px;
+            top: 5px;
+            font-size: 0.9em;
+            transition: 0.3s ease;
+            pointer-events: none;
+        }
+        /* Quand le champ est focus, on monte le label */
+        input:focus + span {
+            color: #00bfff;
+            top: -2px;
+            font-size: 0.7em;
+            font-weight: 600;
+        }
 
-        {% if app.user %}
-            <div class="mb-3">
-                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+        .submit {
+            width: 100%;
+            border: none;
+            outline: none;
+            padding: 10px;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            background-color: #00bfff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+          
+        .submit:hover {
+            background-color: #00bfff96;
+        }
+        .contLine {
+            display: flex;
+            align-items: center;
+            padding-top: 1rem;
+        }  
+        .line {
+            height: 1px;
+            flex: 1 1 0%;
+            background-color: rgba(55, 65, 81, 1);
+            margin-bottom: 1rem;
+        }  
+        .signup {
+            text-align: center;
+            font-size: 0.75rem;
+            line-height: 1rem;
+            color: rgba(156, 163, 175, 1);
+        }
+        .signup a { color: #00bfff; }
+        .signup a:hover {
+            text-decoration: underline royalblue;
+        }
+        
+        @keyframes pulse {
+            from {
+              transform: scale(0.9);
+              opacity: 1;
+            }
+          
+            to {
+              transform: scale(1.8);
+              opacity: 0;
+            }
+        }
+          
+          
+
+    </style>
+
+    {# LOGIN #}
+    <div class="container">
+        <div class="form-container">
+            <p class="title">Login</p>
+            <p>Connectez-vous</p>
+            <form class="form" method="post">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+
+                {% if app.user %}
+                    <div class="mb-3">
+                        You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                    </div>
+                {% endif %}
+
+                {# <h4 class="h3 mb-3 font-weight-normal">Please sign in</h4> #}
+                
+                <div class="form-group">
+                    {# <label for="username">Email</label> #}
+                    <label class="mb-3">
+                        <input type="email" value="{{ last_username }}" name="email" id="email"  autocomplete="email" required autofocus>
+                        <span>Email</span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    {# <label for="password">Password</label> #}
+                    <label class="mb-3">
+                        <input type="password" name="_password" id="password" autocomplete="current-password" required>
+                        <span>Password</span>
+                    </label>
+
+                    <div class="forgot">
+                        <a rel="noopener noreferrer" href="#">Mot de passe oublié ?</a>
+                    </div>
+                </div>
+                
+                <input type="hidden" name="_csrf_token"
+                    value="{{ csrf_token('authenticate') }}"
+                >
+
+                {#
+                    Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                    See https://symfony.com/doc/current/security/remember_me.html
+
+                    <div class="checkbox mb-3">
+                        <input type="checkbox" name="_remember_me" id="_remember_me">
+                        <label for="_remember_me">Remember me</label>
+                    </div>
+                #}
+
+                {# <button class="btn btn-lg btn-primary sign" type="submit"> #}
+                <button class="submit" type="submit">
+                    Sign in
+                </button>
+            </form>
+            <div class="contLine">
+                <div class="line"></div>
             </div>
-        {% endif %}
 
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <label for="username">Email</label>
-        <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
-        <label for="password">Password</label>
-        <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
-
-        <input type="hidden" name="_csrf_token"
-               value="{{ csrf_token('authenticate') }}"
-        >
-
-        {#
-            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-            See https://symfony.com/doc/current/security/remember_me.html
-
-            <div class="checkbox mb-3">
-                <input type="checkbox" name="_remember_me" id="_remember_me">
-                <label for="_remember_me">Remember me</label>
-            </div>
-        #}
-
-        <button class="btn btn-lg btn-primary" type="submit">
-            Sign in
-        </button>
-    </form>
+            <p class="signup">
+                Vous n’avez pas de compte?
+                <a rel="noopener noreferrer" href="{{ path('app_register') }}">Sign up</a>
+            </p>
+        </div>
+    </div>
 {% endblock %}
